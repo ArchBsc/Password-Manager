@@ -34,16 +34,24 @@ class login():
         self.log_master_password = log_master_password
         self.log_rep_password = log_rep_password
 
-class com(new_user, login):
-    
-    def ver(new, lo, master_password, log_master_password, log_rep_password):
-        if (new.master_password == lo.log_master_password):
-            if (lo.log_master_password == lo.log_rep_password):
-                pass
-            else: 
-                print("Repeat password are wong")
+    def ver(log_username, log_email, log_master_password):
+        
+        file = open("data.txt", "r")
+        
+        for i in file:
+            a,b = i.split(",")
+            b = b.strip()
 
-        else
+            if (a == log_username) and (b == ) :
+                pass
+        
+
+
+class register(new_username, new_email, master_password): 
+    
+    file = open("data.txt", "a")
+    file.write("\n"+new_username+","+new_email+","+master_password)
+    file.close()
 
 class new_account():
 
@@ -74,10 +82,26 @@ def main():
     
         ## Data verification 
         new_user1.password_verification(new_user1.master_password, new_user1.rep_password)
+        
+        ## Store data
+        register(new_username_input, new_email_input, new_master_password_input)
+    
 
-        ## login to Account 
+        # with open("/home/arch/Password-Manager/data", "w") as csvfile:
+        #    filewriter = csv.writer(csvfile, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        #    filewriter.writerow([new_username_input, new_email_input, new_master_password_input])
+
+    ## login to Account 
+    
     elif before_login == 2:
+        l_username = input("Enter your username: ")
+        l_email = input("Enter your email: ")
+        l_master_password = getpass("Enter your master password: ")
+        l_rep_password = getpass("Repeat your master password: ")
 
+        l = login(l_username, l_email, l_master_password, l_rep_password)
+        
+       
 
         ## Make new Account
     
