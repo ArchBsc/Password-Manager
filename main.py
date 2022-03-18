@@ -16,7 +16,7 @@ class new_user():
         self.new_username = new_username
         self.master_password = master_password 
         self.rep_password = rep_password
-        self.email = email
+        self.email = new_email
 
     def password_verification(self, master_password, rep_password):
         
@@ -25,20 +25,41 @@ class new_user():
         else:
             print("The master password is not the same with repeat password")
             return main().new_user1()
-    def email_verification(self, email):
-        pattern = r"@....com"
 
-        if re.search(pattern, self,email):
-            pass 
-        else:
-            print("Your haven't the @gmail.com or something like that")
+class login():
+
+    def __init__(self, log_username, log_email, log_master_password, log_rep_password):
+        self.log_username = log_username 
+        self.log_email = log_email
+        self.log_master_password = log_master_password
+        self.log_rep_password = log_rep_password
+
+class com(new_user, login):
+    
+    def ver(new, lo, master_password, log_master_password, log_rep_password):
+        if (new.master_password == lo.log_master_password):
+            if (lo.log_master_password == lo.log_rep_password):
+                pass
+            else: 
+                print("Repeat password are wong")
+
+        else
 
 class new_account():
 
-    def __init__(self, account_email, account_password):
-    
-        self.account_email = email
-        self.account_password = password
+    def __init__(self, account_username, account_email, account_password, account_rep_password):
+        
+        self.account_username = account_username
+        self.account_email = account_email
+        self.account_password = account_password
+        self.account_rep_password = account_rep_password
+
+    def account_verification(self, account_password, account_rep_password):
+        if (self.account_password == self.account_rep_password):
+            pass
+
+        else:
+            return main().new_account_1()
 
 def main():
 
@@ -53,14 +74,23 @@ def main():
     
         ## Data verification 
         new_user1.password_verification(new_user1.master_password, new_user1.rep_password)
-        new_user1.email_verification(new_user1.email)
 
-## Second part 
+        ## login to Account 
+    elif before_login == 2:
 
-    print("\n \n    1. Add new acount \n    2. See details of account ")
 
-    after_login = str(input("Select a number (from 1 to 2): "))
+        ## Make new Account
+    
+    elif before_login == 2:
+        new_account_username = input("Enter your new account usernam: ")
+        new_account_email = input("Enter your new account email")
+        new_account_password = getpass("Enter your new account password")
+        new_account_rep_password = getpass("Repeat password")
 
+        new_account_1 = new_account(new_account_username, new_account_email, new_account_password, new_account_rep_password)
+        new
+
+        new_account_1.account_verification(new_account_1.account_password, new_account_1.account_rep_password)
 
 if __name__ == '__main__':
     main()
