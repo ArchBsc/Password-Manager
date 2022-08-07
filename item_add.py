@@ -1,7 +1,10 @@
-import sqlite3, hashlib, re 
+import sqlite3, hashlib, re
 from datetime import date
 from datetime import datetime
 from getpass import getpass
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
 def new_item():
@@ -62,23 +65,16 @@ def item_search(pattern):
     conn.commit()
     conn.close()
 
-def repit(filename1, filename2):
+# def Encrypt():
+    
+#     conn = sqlite3.connect("database.db")
+#     c = conn.cursor()
 
-        item_quest = input("1)New item \n2)View items \n3)Exit \n:")
-        
-        if item_quest == 1:
-            filename1.new_item(str(input("Enter your username: ")), str(input("Enter your email: ")), str(getpass("Enter your password: ")), str(input("Enter the url of website: ")))
-            
-            quest_2 = input("1)New item \n2)View items \n3)Exit \n: ") 
-
-            if int(quest_2) == 1:
-                filename2.new_item(str(input("What is the name of the item; \n: ")))
-                repit(filename1, filename2)
-            elif int(quest_2) == 2:
-                filename2.item_search(str(input("What is the name of the item; \n: ")))
-                repit(filename1, filename2)
-            else:
-                pass
-
-        else:
-            pass
+#     c.execute("SELECT * FROM cr")
+#     info = c.fetchall()
+    
+#     for item in info:
+#             username = str(item[0])
+#             password = str(item[1])
+#     key = password
+#     with open()
