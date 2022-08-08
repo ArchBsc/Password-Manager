@@ -1,17 +1,17 @@
 import log_sign, item_add, hashlib
 from getpass import getpass
 
-def repit():
+def repit(password):
     
         item_quest = input("1)New item \n2)View items \n3)Exit \n:")
         
         if int(item_quest) == 1:
-            item_add.new_item()
-            repit()
+            item_add.new_item(password)
+            repit(password)
         
         elif int(item_quest) == 2:
-            item_add.item_search(str(input("What is the name of the item; \n: ")))
-            repit()
+            item_add.item_search(str(input("What is the name of the item; \n: ")), password)
+            repit(password)
         else:
             pass
 
@@ -20,21 +20,23 @@ def main():
     
        
     if int(log_r_sign) == 2:
-        log_sign.new_acc(input("Username: "), getpass("Password: "))
+        name = input("Username: ")
+        password = getpass("Password: ")
+        log_sign.new_acc(name, password)
 
         item_quest = input("1)New item \n2) Exit \n:")
         
         if int(item_quest) == 1:
-            item_add.new_item()
+            item_add.new_item(password)
             
             quest_2 = input("1)New item \n2)View items \n3)Exit \n: ") 
 
             if int(quest_2) == 1:
-                item_add.new_item()
-                repit()
+                item_add.new_item(password)
+                repit(password)
             elif int(quest_2) == 2:
-                item_add.item_search(str(input("What is the name of the item; \n: ")))
-                repit()
+                item_add.item_search(str(input("What is the name of the item; \n: ")), password)
+                repit(password)
             else:
                 pass
 
@@ -43,9 +45,12 @@ def main():
 
 
     elif int(log_r_sign) == 1:
-        log_sign.login(input("Username: "), getpass("Password: "))
+        name = input("Username: ")
+        password = getpass("Password: ")
+
+        log_sign.login(name, password)
         
-        repit()
+        repit(password)
         
     else:
         pass

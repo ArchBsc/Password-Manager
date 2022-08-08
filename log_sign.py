@@ -15,9 +15,9 @@ def new_acc(name, password):
         )""")   
         
         password_hash = hashlib.sha256(str.encode(password)).hexdigest()
+        passwd = "b'" + str(password_hash[0:42]) + "='"
 
-
-        c.execute("INSERT INTO cr VALUES(?,?)", (name, password_hash))
+        c.execute("INSERT INTO cr VALUES(?,?)", (name, passwd))
 
         conn.commit()
         conn.close()
@@ -35,8 +35,9 @@ def login(lname, lpassword):
                 password = str(item[1])
         
         login_password_hash = hashlib.sha256(str.encode(lpassword)).hexdigest()
+        login_passwd = "b'" + str(login_password_hash[0:42]) + "='"
 
-        if (login_password_hash == password) & (lname == username):
+        if (login_passwd == password) & (lname == username):
                 pass
         else:
                 print(":(")
