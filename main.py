@@ -6,11 +6,15 @@ def repit(password):
         item_quest = input("1)New item \n2)View items \n3)Exit \n:")
         
         if int(item_quest) == 1:
-            item_add.new_item(password)
+            item_add.Dencrypt(password)
+            item_add.new_item()
+            item_add.Encrypt()
             repit(password)
         
         elif int(item_quest) == 2:
-            item_add.item_search(str(input("What is the name of the item; \n: ")), password)
+            item_add.Dencrypt(password)
+            item_add.item_search(str(input("What is the name of the item; \n: ")))
+            item_add.Encrypt()
             repit(password)
         else:
             pass
@@ -24,18 +28,24 @@ def main():
         password = getpass("Password: ")
         log_sign.new_acc(name, password)
 
-        item_quest = input("1)New item \n2) Exit \n:")
+
+        item_quest = input("1)New item \n2)Exit \n:")
         
         if int(item_quest) == 1:
-            item_add.new_item(password)
+            item_add.new_item()
+            item_add.Encrypt()
             
             quest_2 = input("1)New item \n2)View items \n3)Exit \n: ") 
 
             if int(quest_2) == 1:
-                item_add.new_item(password)
+                item_add.Dencrypt(password)
+                item_add.new_item()
+                item_add.Encrypt()
                 repit(password)
             elif int(quest_2) == 2:
-                item_add.item_search(str(input("What is the name of the item; \n: ")), password)
+                item_add.Dencrypt(password)
+                item_add.item_search(str(input("What is the name of the item; \n: ")))
+                item_add.Encrypt()
                 repit(password)
             else:
                 pass
@@ -47,9 +57,10 @@ def main():
     elif int(log_r_sign) == 1:
         name = input("Username: ")
         password = getpass("Password: ")
+        item_add.Dencrypt(password)
 
         log_sign.login(name, password)
-        
+        item_add.Encrypt()
         repit(password)
         
     else:
