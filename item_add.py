@@ -1,15 +1,16 @@
-import sqlite3, hashlib, re
-from datetime import date
-from datetime import datetime
+import sqlite3, hashlib, re, random
 from getpass import getpass
 from cryptography.fernet import Fernet
+from rich import print
+
 
 def new_item():
 
 
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
-    item_number = int(input("How many items do you want to create \n: "))
+    print("[#14BDFF]How many items do you want to create[/#14BDFF]")
+    item_number = int(input(": "))
 
     count = 1
         
@@ -23,11 +24,14 @@ def new_item():
     
     
     while count <= int(item_number):
-        
-        a = str(input("Enter your username: "))
-        b = str(input("Enter your email: "))
-        h = str(getpass("Enter your password: "))
-        z = str(input("Enter the url of website: "))
+        print("[#14BDFF]Enter your username; [/#14BDFF]")
+        a = str(input())
+        print("[#14BDFF]Enter your email: [/#14BDFF]")
+        b = str(input())
+        print("[#14BDFF]Enter your password: [/#14BDFF]")
+        h = str(getpass())
+        print("[#14BDFF]Enter the url of website: [/#14BDFF]")
+        z = str(input())
 
         c.execute("INSERT INTO item VALUES(?,?,?,?)", (a, b, h, z))
         
@@ -38,36 +42,92 @@ def new_item():
     conn.commit()
     conn.close()
 
+def password_gen():
 
-        
+    pass_len = input("How long do you want password to be; \n")
+    pass_num = input("How many numbers do you want the password to have? \n")
+    pass_syn = input("How many special characters do you want the password to have? \n")
+
+    syn = "!@#$%^&*()_+-=:'<>?/.,"
+    num = "1234567890"
+    low_let = "qwertyuioplkjhgfdsazxcvbnm"
+    upper_let =  low_let.upper()
+
+    all = ""
+    if pass_num != 0:
+        all += num
+    if pass_syn != 0:
+        all += syn
+    all += low_let
+    all += upper_let
+
+    for x in range(1):
+        password = "".join(random.sample(all, pass_len))
+    print(password)
+
 def item_search(pattern):
 
 
+       
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     
+    c.execute("SELECT * FROM item")
+    if pattern == "all":
+        items = c.fetchall()
+        number = 1
+        for item in items:
+            lusername = str(item[0])
+            lemail = str(item[1])
+            lpassword = str(item[2])
+            lurl = str(item[3])
+            mun ="[#0E7C83]"+ str(number) + ") "+ "[/#0E7C83]"
+            let = "[#14BDFF]" + str("Username: "+lusername+ ", Email: "+ lemail+ ", Password: " + lpassword+ ", Url: "+ lurl) + "[/#14BDFF]"
+            print(mun + let)
+            number += 1
+
+    else:    
+        items = c.fetchall()
+        number = 1
+        for item in items:
+
+            lusername = str(item[0])
+            lemail = str(item[1])
+            lpassword = str(item[2])
+            lurl = str(item[3])
+
+        
+            if re.search(pattern, lusername):
+                # mun ="[#0E7C83]"+ str(number) + "[/#0E7C83]"
+                let = "[#14BDFF]" + str("Username: "+lusername+ ", Email: "+ lemail+ ", Password: " + lpassword+ ", Url: "+ lurl) + "[/#14BDFF]"
+                print(let)
+            else:
+                pass
+            
+
+        conn.commit()
+        conn.close()
+        
+def delete():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
     c.execute("SELECT * FROM item")
 
     items = c.fetchall()
     number = 1
     for item in items:
-
         lusername = str(item[0])
         lemail = str(item[1])
         lpassword = str(item[2])
         lurl = str(item[3])
-
-    
-        if re.search(pattern, lusername):
-            print("Username: "+lusername+ ", Email: "+ lemail+ ", Password: " + lpassword+ ", Url: "+ lurl)
-        else:
-            pass
-        
+        print(str(number) +"]"+ "Username: "+lusername+ ", Email: "+ lemail+ ", Password: " + lpassword+ ", Url: "+ lurl)
+        number += 1
+    row = int(input("What is the item number? \n:"))
+    entry = (row,)
+    c.execute("DELETE from item WHERE rowid=?;",entry)
 
     conn.commit()
     conn.close()
-    
-
 
 
 def Encrypt():
@@ -109,5 +169,4 @@ def Dencrypt(password):
     
     with open("database.db", "wb") as f:
         f.write(dencrypted)     
-
 

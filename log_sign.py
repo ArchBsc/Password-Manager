@@ -1,9 +1,5 @@
 import sqlite3, hashlib, re
 from getpass import getpass
-from datetime import date
-from datetime import datetime
-
-
 
 def new_acc(name, password):
         conn = sqlite3.connect("database.db")
