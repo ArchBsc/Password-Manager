@@ -8,7 +8,7 @@ def repit(password):
         i = ""
         num1 = 0
         while num1 < os.get_terminal_size()[0]:
-            i = str(i) + "_"
+            i = str(i) + " "
             num1 += 1
         x = ""
         num2 = 0
@@ -19,12 +19,12 @@ def repit(password):
             size = (int(os.get_terminal_size()[0]-4)/2)
             
         while num2 < size:
-            x = str(x) + "_"
+            x = str(x) + " "
             num2 += 1
 
-        up  = "[#12FFA4]" + str(i) + "[/#12FFA4]"
+        up  = "[underline][#12FFA4]" + str(i) + "[/#12FFA4][/underline]"
         med = "[#12FFA4]" + str(x) + "[/#12FFA4]"
-        print(str(up) + "\n" + str(med) +"[#14BDFF]Menu[/#14BDFF]"+ str(med)+"\n[#0E7C83]1)[/#0E7C83][#14BDFF]New item[/#14BDFF] \n[#0E7C83]2)[/#0E7C83][#14BDFF]View items[/#14BDFF] \n[#0E7C83]3)[/#0E7C83][#14BDFF]Delete item[/#14BDFF] \n[#0E7C83]4)[/#0E7C83][#14BDFF]Exit[/#14BDFF] \n"+ up)
+        print(str(up) + "\n" + str(med) +"[underline][#14BDFF]Menu[/#14BDFF][/underline]"+ str(med)+"\n[#0E7C83]1)[/#0E7C83][#14BDFF]New item[/#14BDFF] \n[#0E7C83]2)[/#0E7C83][#14BDFF]View items[/#14BDFF] \n[#0E7C83]3)[/#0E7C83][#14BDFF]Delete item[/#14BDFF] \n[#0E7C83]4)[/#0E7C83][#14BDFF]Exit[/#14BDFF] \n"+ up)
         item_quest = input(": ")
         
         if int(item_quest) == 1:

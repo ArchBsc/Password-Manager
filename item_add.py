@@ -112,6 +112,7 @@ def item_search(pattern):
         conn.close()
         
 def delete():
+    
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT * FROM item")
@@ -127,8 +128,8 @@ def delete():
         let = ["[#0E7C83]"+ str(number) + "[/#0E7C83]", "[#12FFA4]"+ str(lusername) +"[/#12FFA4]", "[#12FFA4]"+ str(lemail) +"[/#12FFA4]", "[#12FFA4]"+ str(lpassword) +"[/#12FFA4]", "[#12FFA4]"+ str(lurl) +"[/#12FFA4]"]
         number += 1
         table_date.append(let)
-        
     print(tabulate(table_date, tablefmt="plain"))
+
     row = int(input("What is the item number? \n:"))
     entry = (row,)
     c.execute("DELETE from item WHERE rowid=?;",entry)
