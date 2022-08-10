@@ -14,7 +14,18 @@ def repit(password):
         num2 = 0
 
         if (int(os.get_terminal_size()[0]-4)/2)%2 != 0:
-            size = (int(os.get_terminal_size()[0]-5)/2)
+            size = (int(os.get_terminal_size()[0]-4)/2)-0.5
+            if size %2 != 0:
+                size = size - 0.5
+                if size %2 !=0:
+                    size = size -0.5
+                    if size %2 !=0:
+                        size = size -0.5
+                else:
+                    pass
+            else:
+                pass
+
         else:
             size = (int(os.get_terminal_size()[0]-4)/2)
             
@@ -63,21 +74,23 @@ def main():
         password = getpass("Password: ")
         log_sign.new_acc(name, password)
         os.system("clear")
+        i = ""
+        num1 = 0
         while num1 < os.get_terminal_size()[0]:
-            i = str(i) + "-"
+            i = str(i) + "_"
             num1 += 1
         x = ""
         num2 = 0
 
         if (int(os.get_terminal_size()[0]-4)/2)%2 != 0:
-            size = (int(os.get_terminal_size()[0]-5)/2)
+            size = (int(os.get_terminal_size()[0]-4)/2) -0.5
         else:
             size = (int(os.get_terminal_size()[0]-4)/2)
             
         while num2 < size:
             x = str(x) + "-"
             num2 += 1
-        
+
         up  = "[#12FFA4]" + str(i) + "[/#12FFA4]"
         med = "[#12FFA4]" + str(x) + "[/#12FFA4]"
         print(up + "\n"+ med +"[#14BDFF]Menu[/#14BDFF]"+ med +"\n[#0E7C83]1)[/#0E7C83][#14BDFF]New item[/#14BDFF] \n[#0E7C83]2)[/#0E7C83][#14BDFF]Exit[/#14BDFF] \n"+ up)
