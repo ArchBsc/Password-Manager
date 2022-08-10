@@ -2,6 +2,7 @@ import sqlite3, hashlib, re, random
 from getpass import getpass
 from cryptography.fernet import Fernet
 from rich import print
+from tabulate import tabulate
 
 
 def new_item():
@@ -76,19 +77,21 @@ def item_search(pattern):
     if pattern == "all":
         items = c.fetchall()
         number = 1
+        table_date = [["[#0E7C83]id[/#0E7C83]", "[#14BDFF]Username[/#14BDFF]", "[#14BDFF]Email[/#14BDFF]", "[#14BDFF]Password[/#14BDFF]", "[#14BDFF]Url[/#14BDFF]"]]
         for item in items:
             lusername = str(item[0])
             lemail = str(item[1])
             lpassword = str(item[2])
             lurl = str(item[3])
-            mun ="[#0E7C83]"+ str(number) + ") "+ "[/#0E7C83]"
-            let = "[#14BDFF]" + str("Username: "+lusername+ ", Email: "+ lemail+ ", Password: " + lpassword+ ", Url: "+ lurl) + "[/#14BDFF]"
-            print(mun + let)
+            let = ["[#0E7C83]"+ str(number) + "[/#0E7C83]", "[#12FFA4]"+ str(lusername) +"[/#12FFA4]", "[#12FFA4]"+ str(lemail) +"[/#12FFA4]", "[#12FFA4]"+ str(lpassword) +"[/#12FFA4]", "[#12FFA4]"+ str(lurl) +"[/#12FFA4]"]
             number += 1
-
+            table_date.append(let)
+        print(tabulate(table_date, tablefmt="plain"))
     else:    
         items = c.fetchall()
         number = 1
+        table_date = [["[#14BDFF]Username[/#14BDFF]", "[#14BDFF]Email[/#14BDFF]", "[#14BDFF]Password[/#14BDFF]", "[#14BDFF]Url[/#14BDFF]"]]
+
         for item in items:
 
             lusername = str(item[0])
@@ -98,12 +101,12 @@ def item_search(pattern):
 
         
             if re.search(pattern, lusername):
-                # mun ="[#0E7C83]"+ str(number) + "[/#0E7C83]"
-                let = "[#14BDFF]" + str("Username: "+lusername+ ", Email: "+ lemail+ ", Password: " + lpassword+ ", Url: "+ lurl) + "[/#14BDFF]"
-                print(let)
-            else:
-                pass
-            
+                let = ["[#12FFA4]"+ str(lusername) +"[/#12FFA4]", "[#12FFA4]"+ str(lemail) +"[/#12FFA4]", "[#12FFA4]"+ str(lpassword) +"[/#12FFA4]", "[#12FFA4]"+ str(lurl) +"[/#12FFA4]"]
+                table_date.append(let)
+            else: 
+                break
+        print(tabulate(table_date, tablefmt="plain"))
+          
 
         conn.commit()
         conn.close()
@@ -115,13 +118,17 @@ def delete():
 
     items = c.fetchall()
     number = 1
+    table_date = [["[#0E7C83]id[/#0E7C83]", "[#14BDFF]Username[/#14BDFF]", "[#14BDFF]Email[/#14BDFF]", "[#14BDFF]Password[/#14BDFF]", "[#14BDFF]Url[/#14BDFF]"]]
     for item in items:
         lusername = str(item[0])
         lemail = str(item[1])
         lpassword = str(item[2])
         lurl = str(item[3])
-        print(str(number) +"]"+ "Username: "+lusername+ ", Email: "+ lemail+ ", Password: " + lpassword+ ", Url: "+ lurl)
+        let = ["[#0E7C83]"+ str(number) + "[/#0E7C83]", "[#12FFA4]"+ str(lusername) +"[/#12FFA4]", "[#12FFA4]"+ str(lemail) +"[/#12FFA4]", "[#12FFA4]"+ str(lpassword) +"[/#12FFA4]", "[#12FFA4]"+ str(lurl) +"[/#12FFA4]"]
         number += 1
+        table_date.append(let)
+        
+    print(tabulate(table_date, tablefmt="plain"))
     row = int(input("What is the item number? \n:"))
     entry = (row,)
     c.execute("DELETE from item WHERE rowid=?;",entry)

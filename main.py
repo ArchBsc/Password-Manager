@@ -15,22 +15,11 @@ def repit(password):
 
         if (int(os.get_terminal_size()[0]-4)/2)%2 != 0:
             size = (int(os.get_terminal_size()[0]-4)/2)-0.5
-            if size %2 != 0:
-                size = size - 0.5
-                if size %2 !=0:
-                    size = size -0.5
-                    if size %2 !=0:
-                        size = size -0.5
-                else:
-                    pass
-            else:
-                pass
-
         else:
             size = (int(os.get_terminal_size()[0]-4)/2)
             
         while num2 < size:
-            x = str(x) + "-"
+            x = str(x) + "_"
             num2 += 1
 
         up  = "[#12FFA4]" + str(i) + "[/#12FFA4]"
