@@ -4,7 +4,6 @@ from cryptography.fernet import Fernet
 from rich import print
 from tabulate import tabulate
 
-
 def new_item():
 
 
@@ -14,17 +13,36 @@ def new_item():
     item_number = int(input(": "))
 
     count = 1
-        
-    c.execute("""CREATE TABLE IF NOT EXISTS item(
+    
+    try:
+        c.execute("SELECT * FROM item")
+        items = c.fetchall()
+
+        for item in items:
+            lid = str(item[0])
+            lusername = str(item[1])
+            lemail = str(item[2])
+            lpassword = str(item[3])
+            lurl = str(item[4])
+            
+                
+    except sqlite3.OperationalError:
+        c.execute("""CREATE TABLE IF NOT EXISTS item(
+            id number,
             username text,
             email text,
             passwd text,
             website text
-    )""")   
+        )""")
+        id = 0
+        lid = str(id)
+        test = "test"
+        c.execute("INSERT INTO item VALUES(?,?,?,?,?)", (lid,test,test,test,test))
+    
 
-    
-    
     while count <= int(item_number):
+        id = str(int(lid) + 1) 
+        print(id)
         print("[#14BDFF]Enter your username; [/#14BDFF]")
         a = str(input())
         print("[#14BDFF]Enter your email: [/#14BDFF]")
@@ -34,12 +52,12 @@ def new_item():
         print("[#14BDFF]Enter the url of website: [/#14BDFF]")
         z = str(input())
 
-        c.execute("INSERT INTO item VALUES(?,?,?,?)", (a, b, h, z))
+        c.execute("INSERT INTO item VALUES(?,?,?,?,?)", (id, a, b, h, z))
         
         count += 1
         conn.commit()
 
-
+    
     conn.commit()
     conn.close()
 
@@ -68,8 +86,6 @@ def password_gen():
 
 def item_search(pattern):
 
-
-       
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     
@@ -79,10 +95,11 @@ def item_search(pattern):
         number = 1
         table_date = [["[#0E7C83]id[/#0E7C83]", "[#14BDFF]Username[/#14BDFF]", "[#14BDFF]Email[/#14BDFF]", "[#14BDFF]Password[/#14BDFF]", "[#14BDFF]Url[/#14BDFF]"]]
         for item in items:
-            lusername = str(item[0])
-            lemail = str(item[1])
-            lpassword = str(item[2])
-            lurl = str(item[3])
+            lid = str(item[0])
+            lusername = str(item[1])
+            lemail = str(item[2])
+            lpassword = str(item[3])
+            lurl = str(item[4])
             let = ["[#0E7C83]"+ str(number) + "[/#0E7C83]", "[#12FFA4]"+ str(lusername) +"[/#12FFA4]", "[#12FFA4]"+ str(lemail) +"[/#12FFA4]", "[#12FFA4]"+ str(lpassword) +"[/#12FFA4]", "[#12FFA4]"+ str(lurl) +"[/#12FFA4]"]
             number += 1
             table_date.append(let)
@@ -94,10 +111,11 @@ def item_search(pattern):
 
         for item in items:
 
-            lusername = str(item[0])
-            lemail = str(item[1])
-            lpassword = str(item[2])
-            lurl = str(item[3])
+            lid = str(item[0])
+            lusername = str(item[1])
+            lemail = str(item[2])
+            lpassword = str(item[3])
+            lurl = str(item[4])
 
         
             if re.search(pattern, lusername):
@@ -112,7 +130,7 @@ def item_search(pattern):
         conn.close()
         
 def delete():
-    
+
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT * FROM item")
@@ -121,18 +139,20 @@ def delete():
     number = 1
     table_date = [["[#0E7C83]id[/#0E7C83]", "[#14BDFF]Username[/#14BDFF]", "[#14BDFF]Email[/#14BDFF]", "[#14BDFF]Password[/#14BDFF]", "[#14BDFF]Url[/#14BDFF]"]]
     for item in items:
-        lusername = str(item[0])
-        lemail = str(item[1])
-        lpassword = str(item[2])
-        lurl = str(item[3])
+        lid = str(item[0])
+        lusername = str(item[1])
+        lemail = str(item[2])
+        lpassword = str(item[3])
+        lurl = str(item[4])
         let = ["[#0E7C83]"+ str(number) + "[/#0E7C83]", "[#12FFA4]"+ str(lusername) +"[/#12FFA4]", "[#12FFA4]"+ str(lemail) +"[/#12FFA4]", "[#12FFA4]"+ str(lpassword) +"[/#12FFA4]", "[#12FFA4]"+ str(lurl) +"[/#12FFA4]"]
         number += 1
         table_date.append(let)
     print(tabulate(table_date, tablefmt="plain"))
 
     row = int(input("What is the item number? \n:"))
-    entry = (row,)
-    c.execute("DELETE from item WHERE rowid=?;",entry)
+    
+    c.execute("DELETE from item WHERE id=(?)", (str(row)))
+    
 
     conn.commit()
     conn.close()
