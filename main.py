@@ -65,18 +65,18 @@ def repit(password):
                 repit(password)         
 
         elif int(item_quest) == 3:
-            try:
-                os.system("clear")
-                item_add.Dencrypt(password)
-                item_add.delete()
-                item_add.Encrypt()
-                time.sleep(0.5)
-                repit(password)
-            except:
-                item_add.Encrypt()
-                print("You wrote something wrong. Try again!")
-                time.sleep(1)
-                repit(password)
+            # try:
+            os.system("clear")
+            item_add.Dencrypt(password)
+            item_add.delete()
+            item_add.Encrypt()
+            time.sleep(0.5)
+            repit(password)
+            # except:
+            #     item_add.Encrypt()
+            #     print("You wrote something wrong. Try again!")
+            #     time.sleep(1)
+            #     repit(password)
         else:
             pass
 

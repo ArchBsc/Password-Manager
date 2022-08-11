@@ -38,19 +38,42 @@ def new_item():
         lid = str(id)
         test = "test"
         c.execute("INSERT INTO item VALUES(?,?,?,?,?)", (lid,test,test,test,test))
-    
 
+    
     while count <= int(item_number):
-        id = str(int(lid) + 1) 
-        print(id)
-        print("[#14BDFF]Enter your username; [/#14BDFF]")
-        a = str(input())
-        print("[#14BDFF]Enter your email: [/#14BDFF]")
-        b = str(input())
-        print("[#14BDFF]Enter your password: [/#14BDFF]")
-        h = str(getpass())
-        print("[#14BDFF]Enter the url of website: [/#14BDFF]")
-        z = str(input())
+        c.execute("SELECT * FROM item")
+        items = c.fetchall()
+
+        for item in items:
+            lid = str(item[0])
+            lusername = str(item[1])
+            lemail = str(item[2])
+            lpassword = str(item[3])
+            lurl = str(item[4])
+
+        if item_number == 1:
+            id = str(int(lid) + 1)
+            print("[#14BDFF]Enter your username; [/#14BDFF]")
+            a = str(input())
+            print("[#14BDFF]Enter your email: [/#14BDFF]")
+            b = str(input())
+            print("[#14BDFF]Enter your password: [/#14BDFF]")
+            h = str(getpass())
+            print("[#14BDFF]Enter the url of website: [/#14BDFF]")
+            z = str(input())
+
+        else:
+            id = str(int(lid) + 1)
+            print("[#14BDFF]Enter your username; [/#14BDFF]")
+            a = str(input())
+            print("[#14BDFF]Enter your email: [/#14BDFF]")
+            b = str(input())
+            print("[#14BDFF]Enter your password: [/#14BDFF]")
+            h = str(getpass())
+            print("[#14BDFF]Enter the url of website: [/#14BDFF]")
+            z = str(input())
+            print("\n[underline][#12FFA4]                         [/#12FFA4][/underline]")
+        
 
         c.execute("INSERT INTO item VALUES(?,?,?,?,?)", (id, a, b, h, z))
         
@@ -144,19 +167,18 @@ def delete():
         lemail = str(item[2])
         lpassword = str(item[3])
         lurl = str(item[4])
-        let = ["[#0E7C83]"+ str(number) + "[/#0E7C83]", "[#12FFA4]"+ str(lusername) +"[/#12FFA4]", "[#12FFA4]"+ str(lemail) +"[/#12FFA4]", "[#12FFA4]"+ str(lpassword) +"[/#12FFA4]", "[#12FFA4]"+ str(lurl) +"[/#12FFA4]"]
+        let = ["[#0E7C83]"+ str(lid) + "[/#0E7C83]", "[#12FFA4]"+ str(lusername) +"[/#12FFA4]", "[#12FFA4]"+ str(lemail) +"[/#12FFA4]", "[#12FFA4]"+ str(lpassword) +"[/#12FFA4]", "[#12FFA4]"+ str(lurl) +"[/#12FFA4]"]
         number += 1
         table_date.append(let)
     print(tabulate(table_date, tablefmt="plain"))
 
-    row = int(input("What is the item number? \n:"))
+    row = str(input("What is the item number? \n:"))
     
-    c.execute("DELETE from item WHERE id=(?)", (str(row)))
-    
+    c.execute("DELETE from item WHERE id=(?)", (row))
+
 
     conn.commit()
     conn.close()
-
 
 def Encrypt():
     
