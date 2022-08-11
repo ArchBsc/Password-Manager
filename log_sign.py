@@ -1,4 +1,4 @@
-import sqlite3, hashlib, re
+import sqlite3, hashlib, re, os
 from getpass import getpass
 
 def new_acc(name, password):
@@ -41,3 +41,5 @@ def login(lname, lpassword):
 
         conn.commit()
         conn.close()
+
+        

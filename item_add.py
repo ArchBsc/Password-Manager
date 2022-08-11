@@ -1,4 +1,4 @@
-import sqlite3, hashlib, re, random
+import sqlite3, hashlib, re, random, string
 from getpass import getpass
 from cryptography.fernet import Fernet
 from rich import print
@@ -57,8 +57,13 @@ def new_item():
             a = str(input())
             print("[#14BDFF]Enter your email: [/#14BDFF]")
             b = str(input())
-            print("[#14BDFF]Enter your password: [/#14BDFF]")
-            h = str(getpass())
+            print("[#14BDFF]Do you want to generate the password[/#14BDFF] (type yes to generate);")
+            pass_gen = input(": ")
+            if pass_gen == "yes":
+                h = str(password_gen())
+            else:
+                print("[#14BDFF]Enter your password[#FFFFFF]:[/#FFFFFF] [/#14BDFF]")
+                h = str(getpass())
             print("[#14BDFF]Enter the url of website: [/#14BDFF]")
             z = str(input())
 
@@ -68,9 +73,14 @@ def new_item():
             a = str(input())
             print("[#14BDFF]Enter your email: [/#14BDFF]")
             b = str(input())
-            print("[#14BDFF]Enter your password: [/#14BDFF]")
-            h = str(getpass())
-            print("[#14BDFF]Enter the url of website: [/#14BDFF]")
+            print("[#14BDFF]Do you want to generate the password[/#14BDFF] (type yes to generate);")
+            pass_gen = input(": ")
+            if pass_gen == "yes":
+                h = str(password_gen())
+            else:
+                print("[#14BDFF]Enter your password[#FFFFFF]:[/#FFFFFF] [/#14BDFF]")
+                h = str(getpass())
+            print("[#14BDFF]Enter the url of website[#FFFFFF]:[/#FFFFFF] [/#14BDFF]")
             z = str(input())
             print("\n[underline][#12FFA4]                         [/#12FFA4][/underline]")
         
@@ -85,27 +95,31 @@ def new_item():
     conn.close()
 
 def password_gen():
-
-    pass_len = input("How long do you want password to be; \n")
-    pass_num = input("How many numbers do you want the password to have? \n")
-    pass_syn = input("How many special characters do you want the password to have? \n")
+    print("[#12FFA4]How long do you want password to be[/#12FFA4];")
+    pass_len = int(input(": "))
+    print("[#12FFA4]Do you want to have numbers (type yes to add numbers)[/#12FFA4];")
+    pass_num = input(": ")
+    print("[#12FFA4]Do you want to have syntax (type yes to add numbers)[/#12FFA4];")
+    pass_syn = input(": ")
 
     syn = "!@#$%^&*()_+-=:'<>?/.,"
     num = "1234567890"
     low_let = "qwertyuioplkjhgfdsazxcvbnm"
     upper_let =  low_let.upper()
 
-    all = ""
-    if pass_num != 0:
-        all += num
-    if pass_syn != 0:
-        all += syn
-    all += low_let
-    all += upper_let
+    all = []
+    if pass_num == "yes":
+        all.extend(num)
+    if pass_syn == "yes":    
+        all.extend(syn)
+    all.extend(low_let)
+    all.extend(upper_let)
 
-    for x in range(1):
-        password = "".join(random.sample(all, pass_len))
-    print(password)
+    random.shuffle(all)
+
+    password = "".join(all[0:pass_len])
+    
+    return password
 
 def item_search(pattern):
 
