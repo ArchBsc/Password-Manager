@@ -1,4 +1,4 @@
-import log_sign, item_add, os, time, installer
+import log_sign, item_add, os, time
 from getpass import getpass
 from rich import print
 
