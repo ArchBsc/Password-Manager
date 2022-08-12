@@ -1,4 +1,4 @@
-import log_sign, item_add, os, time
+import log_sign, item_add, os, time, installer
 from getpass import getpass
 from rich import print
 
@@ -116,25 +116,25 @@ def repit(password):
                 repit(password)
 
         elif int(item_quest) == 7:
-            # try:
-            os.system("clear")
-            item_add.Dencrypt(password)
-            item_add.delete_note()
-            item_add.Encrypt()
-            time.sleep(0.5)
-            repit(password)
-            # except:
-            #     item_add.Encrypt()
-            #     print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
-            #     time.sleep(1)
-            #     repit(password)   
+            try:
+                os.system("clear")
+                item_add.Dencrypt(password)
+                item_add.delete_note()
+                item_add.Encrypt()
+                time.sleep(0.5)
+                repit(password)
+            except:
+                item_add.Encrypt()
+                print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
+                time.sleep(1)
+                repit(password)   
 
         else:
             pass
 
 def main():
     os.system("clear")
-    print("[#0E7C83]1)[/#0E7C83][#14BDFF] Login[/#14BDFF] \n[#0E7C83]2)[/#0E7C83] [#14BDFF]Sign in[/#14BDFF]")
+    print("[#0E7C83]1)[/#0E7C83][#14BDFF] Login[/#14BDFF] \n[#0E7C83]2)[/#0E7C83] [#14BDFF]Sign in[/#14BDFF] \n[#0E7C83]2)[/#0E7C83] [#14BDFF]Install packages[/#14BDFF]")
     log_r_sign = input(": ")
     
        
@@ -195,7 +195,9 @@ def main():
         log_sign.login(name, password)
         item_add.Encrypt()
         repit(password)
-        
+
+    elif int(log_r_sign) == 1:
+        installer.run()    
     else:
         pass
             
