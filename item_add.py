@@ -3,6 +3,8 @@ from getpass import getpass
 from cryptography.fernet import Fernet
 from rich import print
 from tabulate import tabulate
+from datetime import date
+from datetime import datetime
 
 def new_item():
 
@@ -121,6 +123,84 @@ def password_gen():
     
     return password
 
+def safe_note():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    print("[#14BDFF]How many notes do you want to create[/#14BDFF]")
+    note_number = int(input(": "))
+
+    count = 1
+    
+    try:
+        c.execute("SELECT * FROM notes")
+        notes = c.fetchall()
+
+        for note in notes:
+            lid = str(note[0])
+            lnotes = str(note[1])
+            ltime = str(note[2])
+            lname = str(note[3])
+                
+    except sqlite3.OperationalError:
+        c.execute("""CREATE TABLE IF NOT EXISTS notes(
+            id number,
+            note text,
+            time text,
+            name text
+        )""")
+        id = 0
+        lid = str(id)
+        test = "test"
+        c.execute("INSERT INTO notes VALUES(?,?,?,?)", (lid,test,test,test))
+
+    
+    while count <= int(note_number):
+        c.execute("SELECT * FROM notes")
+        notes = c.fetchall()
+
+        for note in notes:
+            lid = str(note[0])
+            lnotes = str(note[1])
+            ltime = str(note[2])
+            lname = str(note[3])
+
+        if note_number == 1:
+            id = str(int(lid) + 1)
+
+            print("[#14BDFF]Enter your username; [/#14BDFF]")
+            name = input(":")
+
+            print("[#14BDFF]Note: [/#14BDFF]")
+            note = input("")
+
+            now = datetime.now()
+            curr_date = ("["+str(date.today())+"]")
+            time = str(now.strftime("%H:%M"))
+            today = curr_date +"-"+ time
+
+        else:
+            id = str(int(lid) + 1)
+
+            print("[#14BDFF]Enter your username; [/#14BDFF]")
+            name = input(": ")
+            
+            print("[#14BDFF]Note: [/#14BDFF]")
+            note = input("")
+            
+            now = datetime.now()
+            curr_date = ("["+str(date.today())+"]")
+            time = str(now.strftime("%H:%M"))
+            today = curr_date +"-"+ time
+
+        c.execute("INSERT INTO notes VALUES(?,?,?,?)", (id, note, today, name))
+        
+        count += 1
+        conn.commit()
+
+    
+    conn.commit()
+    conn.close()
+
 def item_search(pattern):
 
     conn = sqlite3.connect("database.db")
@@ -165,8 +245,40 @@ def item_search(pattern):
 
         conn.commit()
         conn.close()
-        
-def delete():
+
+def safe_note_search(pattern):
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    
+    c.execute("SELECT * FROM notes")
+    if pattern == "all":
+        notes = c.fetchall()
+        for note in notes:
+            lid = str(note[0])
+            lnotes = str(note[1])
+            ltime = str(note[2])
+            lname = str(note[3])
+
+            print("[#0E7C83]"+ltime + "[/#0E7C83]" + "   " + "[#12FFA4]" +lnotes + "[/#12FFA4]")
+
+
+    else:    
+        notes = c.fetchall()
+        for note in notes:
+            lid = str(note[0])
+            lnotes = str(note[1])
+            ltime = str(note[2])
+            lname = str(note[3])
+            
+            if re.search(pattern, lname):
+                print("[#0E7C83]"+ltime + "[/#0E7C83]" + "   " + "[#12FFA4]" +lnotes + "[/#12FFA4]")
+            else: 
+                break
+
+        conn.commit()
+        conn.close()
+
+def delete_item():
 
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
@@ -194,6 +306,30 @@ def delete():
     conn.commit()
     conn.close()
 
+def delete_note():
+    
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM notes")
+
+    
+    notes = c.fetchall()
+    for note in notes:
+        lid = str(note[0])
+        lnotes = str(note[1])
+        ltime = str(note[2])
+        lname = str(note[3])
+
+        print("[#0E7C83]"+ lid +")[/#0E7C83] "+"[#0E7C83]"+ltime + "[/#0E7C83]" + "   " + "[#12FFA4]" +lnotes + "[/#12FFA4]")
+
+    row = str(input("What is the note number? \n:"))
+    
+    c.execute("DELETE from notes WHERE id=(?)", (row))
+
+
+    conn.commit()
+    conn.close()
+    
 def Encrypt():
     
     conn = sqlite3.connect("database.db")

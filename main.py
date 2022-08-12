@@ -27,7 +27,7 @@ def repit(password):
 
         up  = "[underline][#12FFA4]" + str(i) + "[/#12FFA4][/underline]"
         med = "[#12FFA4]" + str(x) + "[/#12FFA4]"
-        print(str(up) + "\n" + str(med) +"[underline][#14BDFF]Menu[/#14BDFF][/underline]"+ str(med)+"\n[#0E7C83]1)[/#0E7C83][#14BDFF]New item[/#14BDFF] \n[#0E7C83]2)[/#0E7C83][#14BDFF]View items[/#14BDFF] \n[#0E7C83]3)[/#0E7C83][#14BDFF]Delete item[/#14BDFF] \n[#0E7C83]4)[/#0E7C83][#14BDFF]Reset[/#14BDFF] \n[#0E7C83]5)[/#0E7C83][#14BDFF]Exit[/#14BDFF] \n"+ up)
+        print(str(up) + "\n" + str(med) +"[underline][#14BDFF]Menu[/#14BDFF][/underline]"+ str(med)+"\n[#0E7C83]1)[/#0E7C83][#14BDFF]New item[/#14BDFF] \n[#0E7C83]2)[/#0E7C83][#14BDFF]View items[/#14BDFF] \n[#0E7C83]3)[/#0E7C83][#14BDFF]Delete item[/#14BDFF] \n[#0E7C83]4)[/#0E7C83][#14BDFF]Reset[/#14BDFF] \n[#0E7C83]5)[/#0E7C83][#14BDFF]Safe note[/#14BDFF] \n[#0E7C83]6)[/#0E7C83][#14BDFF]View safe note[/#14BDFF] \n[#0E7C83]7)[/#0E7C83][#14BDFF]Delete note[/#14BDFF] \n[#0E7C83]8)[/#0E7C83][#14BDFF]Exit[/#14BDFF] \n"+ up)
         item_quest = input(": ")
 
         ## Mechanics
@@ -47,8 +47,6 @@ def repit(password):
                 repit(password)
 
         elif int(item_quest) == 2:
-
-            
             try:
                 os.system("clear")
                 item_add.Dencrypt(password)
@@ -68,7 +66,7 @@ def repit(password):
             try:
                 os.system("clear")
                 item_add.Dencrypt(password)
-                item_add.delete()
+                item_add.delete_item()
                 item_add.Encrypt()
                 time.sleep(0.5)
                 repit(password)
@@ -87,15 +85,60 @@ def repit(password):
             else:
                 time.sleep(0.5)
                 repit(password)
+        elif int(item_quest) == 5:
+            os.system("clear")
+            try:
+                item_add.Dencrypt(password)
+                item_add.safe_note()
+                item_add.Encrypt()
+                time.sleep(0.5)            
+                repit(password)
+            except:
+                item_add.Encrypt()
+                print("[#12FFA4]You wrote something wrong. Try again![/#12FFA4]")
+                time.sleep(1)
+                repit(password)
+        
+        elif int(item_quest) == 6:
+            try:
+                os.system("clear")
+                item_add.Dencrypt(password)
+                print("[#14BDFF]What is the name of the note[/#14BDFF] (type all to see all)[#14BDFF];[/#14BDFF]")
+                item_add.safe_note_search(str(input(": ")))
+                item_add.Encrypt()
+                print("[#FF1420]Press any key to continue[/#FF1420]")
+                input()
+                repit(password)
+            except:
+                item_add.Encrypt()
+                print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
+                time.sleep(1)
+                repit(password)
+
+        elif int(item_quest) == 7:
+            # try:
+            os.system("clear")
+            item_add.Dencrypt(password)
+            item_add.delete_note()
+            item_add.Encrypt()
+            time.sleep(0.5)
+            repit(password)
+            # except:
+            #     item_add.Encrypt()
+            #     print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
+            #     time.sleep(1)
+            #     repit(password)   
+
         else:
             pass
 
 def main():
-    log_r_sign = input("1) Login \n2) Sign in \n: ")
+    os.system("clear")
+    print("[#0E7C83]1)[/#0E7C83][#14BDFF] Login[/#14BDFF] \n[#0E7C83]2)[/#0E7C83] [#14BDFF]Sign in[/#14BDFF]")
+    log_r_sign = input(": ")
     
        
     if int(log_r_sign) == 2:
-        os.system("clear")
         name = input("Username: ")
         password = getpass("Password: ")
         log_sign.new_acc(name, password)
