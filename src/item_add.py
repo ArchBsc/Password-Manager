@@ -7,7 +7,7 @@ from datetime import date
 from datetime import datetime
 
 def new_item():
-
+    
 
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
@@ -22,12 +22,7 @@ def new_item():
 
         for item in items:
             lid = str(item[0])
-            lusername = str(item[1])
-            lemail = str(item[2])
-            lpassword = str(item[3])
-            lurl = str(item[4])
-            
-                
+                       
     except sqlite3.OperationalError:
         c.execute("""CREATE TABLE IF NOT EXISTS item(
             id number,
@@ -48,10 +43,6 @@ def new_item():
 
         for item in items:
             lid = str(item[0])
-            lusername = str(item[1])
-            lemail = str(item[2])
-            lpassword = str(item[3])
-            lurl = str(item[4])
 
         if item_number == 1:
             id = str(int(lid) + 1)
@@ -137,10 +128,7 @@ def safe_note():
 
         for note in notes:
             lid = str(note[0])
-            lnotes = str(note[1])
-            ltime = str(note[2])
-            lname = str(note[3])
-                
+
     except sqlite3.OperationalError:
         c.execute("""CREATE TABLE IF NOT EXISTS notes(
             id number,
@@ -160,9 +148,6 @@ def safe_note():
 
         for note in notes:
             lid = str(note[0])
-            lnotes = str(note[1])
-            ltime = str(note[2])
-            lname = str(note[3])
 
         if note_number == 1:
             id = str(int(lid) + 1)
@@ -212,7 +197,6 @@ def item_search(pattern):
         number = 1
         table_date = [["[#0E7C83]id[/#0E7C83]", "[#14BDFF]Username[/#14BDFF]", "[#14BDFF]Email[/#14BDFF]", "[#14BDFF]Password[/#14BDFF]", "[#14BDFF]Url[/#14BDFF]"]]
         for item in items:
-            lid = str(item[0])
             lusername = str(item[1])
             lemail = str(item[2])
             lpassword = str(item[3])
@@ -227,8 +211,6 @@ def item_search(pattern):
         table_date = [["[#14BDFF]Username[/#14BDFF]", "[#14BDFF]Email[/#14BDFF]", "[#14BDFF]Password[/#14BDFF]", "[#14BDFF]Url[/#14BDFF]"]]
 
         for item in items:
-
-            lid = str(item[0])
             lusername = str(item[1])
             lemail = str(item[2])
             lpassword = str(item[3])
@@ -254,7 +236,6 @@ def safe_note_search(pattern):
     if pattern == "all":
         notes = c.fetchall()
         for note in notes:
-            lid = str(note[0])
             lnotes = str(note[1])
             ltime = str(note[2])
             lname = str(note[3])
@@ -265,7 +246,6 @@ def safe_note_search(pattern):
     else:    
         notes = c.fetchall()
         for note in notes:
-            lid = str(note[0])
             lnotes = str(note[1])
             ltime = str(note[2])
             lname = str(note[3])
@@ -318,7 +298,6 @@ def delete_note():
         lid = str(note[0])
         lnotes = str(note[1])
         ltime = str(note[2])
-        lname = str(note[3])
 
         print("[#0E7C83]"+ lid +")[/#0E7C83] "+"[#0E7C83]"+ltime + "[/#0E7C83]" + "   " + "[#12FFA4]" +lnotes + "[/#12FFA4]")
 
@@ -339,7 +318,6 @@ def Encrypt():
     info = c.fetchall()
     
     for item in info:
-            username = str(item[0])
             password = str(item[1])
             
     key = password
