@@ -389,22 +389,6 @@ def space(a, b):
 
 def repit(password):
     
-    def r(passwd, a):
-        os.system("clear")
-        try:
-            Dencrypt(passwd)
-            a
-            Encrypt()
-            time.sleep(0.5)            
-            repit(passwd)
-        except:
-            Encrypt()
-            print("[#12FFA4]You wrote something wrong. Try again![/#12FFA4]")
-            time.sleep(1)
-            repit(passwd)
-
-
-
         ## Printing 
         os.system("clear")
         a1 = int(os.get_terminal_size()[0])
