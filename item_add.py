@@ -1,4 +1,4 @@
-import sqlite3, hashlib, re, random, string, os, time, main
+import sqlite3, hashlib, re, random, os, time, main
 from getpass import getpass
 from cryptography.fernet import Fernet
 from rich import print
@@ -370,25 +370,55 @@ def Dencrypt(password):
     with open("database.db", "wb") as f:
         f.write(dencrypted)     
 
-def space(a, b):
-    
-    if a == os.get_terminal_size()[0]:
-        i = ""
-        num1 = 0
-        while num1 < int(a):
-            i = str(i) + str(b)
-            num1 += 1
-        return  ("[underline][#12FFA4]" + str(i) + "[/#12FFA4][/underline]")
-    else:
-        i = ""
-        num1 = 0
-        while num1 < int(a- 4.5):
-            i = str(i) + str(b)
-            num1 += 1
-        return ("[#12FFA4]" + str(i) + "[/#12FFA4]")
-
 def repit(password):
     
+        def space(a, b):
+            
+            if a == os.get_terminal_size()[0]:
+                i = ""
+                num1 = 0
+                while num1 < int(a):
+                    i = str(i) + str(b)
+                    num1 += 1
+                return  ("[underline][#12FFA4]" + str(i) + "[/#12FFA4][/underline]")
+            else:
+                i = ""
+                num1 = 0
+                while num1 < int(a- 4.5):
+                    i = str(i) + str(b)
+                    num1 += 1
+                return ("[#12FFA4]" + str(i) + "[/#12FFA4]")
+        
+        def r1(a, passwd):
+            os.system("clear")
+            try:
+                Dencrypt(passwd)
+                a()
+                Encrypt()
+                time.sleep(0.5)            
+                repit(passwd)
+            except:
+                Encrypt()
+                print("[#12FFA4]You wrote something wrong. Try again![/#12FFA4]")
+                time.sleep(1)
+                repit(passwd)
+
+        def r2(a, passwd):
+            try:
+                os.system("clear")
+                Dencrypt(passwd)
+                print("[#14BDFF]What is the name of the item[/#14BDFF] (type all to see all)[#14BDFF];[/#14BDFF]")
+                a(str(input(": ")))
+                Encrypt()
+                print("[#FF1420]Press any key to continue[/#FF1420]")
+                input()
+                repit(passwd)
+            except:
+                Encrypt()
+                print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
+                time.sleep(1)
+                repit(passwd)
+
         ## Printing 
         os.system("clear")
         a1 = int(os.get_terminal_size()[0])
@@ -397,111 +427,28 @@ def repit(password):
         up = space(a1, b)
         med = space(a2, b)
 
-        print(str(up) + "\n" + str(med) +"[underline][#14BDFF]Menu[/#14BDFF][/underline]"+ str(med)+"\n[#0E7C83]1)[/#0E7C83][#14BDFF]New item[/#14BDFF] \n[#0E7C83]2)[/#0E7C83][#14BDFF]View items[/#14BDFF] \n[#0E7C83]3)[/#0E7C83][#14BDFF]Safe note[/#14BDFF] \n[#0E7C83]4)[/#0E7C83][#14BDFF]View safe note[/#14BDFF] \n[#0E7C83]5)[/#0E7C83][#14BDFF]Delete item[/#14BDFF] \n[#0E7C83]8)[/#0E7C83][#14BDFF]Delete note[/#14BDFF] \n[#0E7C83]7)[/#0E7C83][#14BDFF]Reset[/#14BDFF] \n[#0E7C83]8)[/#0E7C83][#14BDFF]Exit[/#14BDFF] \n"+ up)
+        print(str(up) + "\n" + str(med) +"[underline][#14BDFF]Menu[/#14BDFF][/underline]"+ str(med)+"\n[#0E7C83]1)[/#0E7C83][#14BDFF]New item[/#14BDFF] \n[#0E7C83]2)[/#0E7C83][#14BDFF]View items[/#14BDFF] \n[#0E7C83]3)[/#0E7C83][#14BDFF]Safe note[/#14BDFF] \n[#0E7C83]4)[/#0E7C83][#14BDFF]View safe note[/#14BDFF] \n[#0E7C83]5)[/#0E7C83][#14BDFF]Delete item[/#14BDFF] \n[#0E7C83]6)[/#0E7C83][#14BDFF]Delete note[/#14BDFF] \n[#0E7C83]7)[/#0E7C83][#14BDFF]Reset[/#14BDFF] \n[#0E7C83]8)[/#0E7C83][#14BDFF]Exit[/#14BDFF] \n"+ up)
         item_quest = input(": ")
 
         ## Mechanics
 
         if int(item_quest) == 1:
-            # New item
-
-            os.system("clear")
-            try:
-                Dencrypt(password)
-                new_item()
-                Encrypt()
-                time.sleep(0.5)            
-                repit(password)
-            except:
-                Encrypt()
-                print("[#12FFA4]You wrote something wrong. Try again![/#12FFA4]")
-                time.sleep(1)
-                repit(password)
+            r1(new_item, password)
 
         elif int(item_quest) == 2:
-            # View items
-
-            try:
-                os.system("clear")
-                Dencrypt(password)
-                print("[#14BDFF]What is the name of the item[/#14BDFF] (type all to see all)[#14BDFF];[/#14BDFF]")
-                item_search(str(input(": ")))
-                Encrypt()
-                print("[#FF1420]Press any key to continue[/#FF1420]")
-                input()
-                repit(password)
-            except:
-                Encrypt()
-                print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
-                time.sleep(1)
-                repit(password)         
+            r2(item_search, password)
 
         elif int(item_quest) == 3:
-            # Safe note
-
-            os.system("clear")
-            try:
-                Dencrypt(password)
-                safe_note()
-                Encrypt()
-                time.sleep(0.5)            
-                repit(password)
-            except:
-                Encrypt()
-                print("[#12FFA4]You wrote something wrong. Try again![/#12FFA4]")
-                time.sleep(1)
-                repit(password)
-            
+            r1(safe_note, password)
+        
         elif int(item_quest) == 4:
-            # View safe note
+            r2(safe_note_search, password)
 
-            try:
-                os.system("clear")
-                Dencrypt(password)
-                print("[#14BDFF]What is the name of the note[/#14BDFF] (type all to see all)[#14BDFF];[/#14BDFF]")
-                safe_note_search(str(input(": ")))
-                Encrypt()
-                print("[#FF1420]Press any key to continue[/#FF1420]")
-                input()
-                repit(password)
-            except:
-                Encrypt()
-                print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
-                time.sleep(1)
-                repit(password)
-            
         elif int(item_quest) == 5:
-            # Delete item
-
-            try:
-                os.system("clear")
-                Dencrypt(password)
-                delete_item()
-                Encrypt()
-                time.sleep(0.5)
-                repit(password)
-            except:
-                Encrypt()
-                print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
-                time.sleep(1)
-                repit(password)
+            r1(delete_item, password)
         
         elif int(item_quest) == 6:
-            # Delete note
-
-            try:
-                os.system("clear")
-                Dencrypt(password)
-                delete_note()
-                Encrypt()
-                time.sleep(0.5)
-                repit(password)
-            except:
-                Encrypt()
-                print("[#14BDFF]You wrote something wrong. Try again![/#14BDFF]")
-                time.sleep(1)
-                repit(password)  
-
+            r1(delete_note, password)
 
         elif int(item_quest) == 7:
             # Reset
