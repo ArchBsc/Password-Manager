@@ -3,6 +3,8 @@ This is a simple offline Password Manager.
 
 ## Installation
 
+### Terminal Version
+
 #### First way 
 
 Clone the repo, cd into it and install the enviroment(You need to have pipenv installed).
@@ -17,6 +19,13 @@ Clone the repo, cd into it and install the packages manually
 
 ```
 $ pip install cryptography rich tabulate
+```
+### Gui Version
+
+Clone the repo, cd into it and install the packages manually
+
+```
+$ pip install tkinter 
 ```
 
 ## Run
